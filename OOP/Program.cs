@@ -62,3 +62,103 @@ cus1.Address = "Số 2 Đinh Bộ Lĩnh - Bình Thạnh - HCM";
 cus1.Phone = "023534546";
 Console.WriteLine("Thông tin Customer sau khi chỉnh sửa:");
 cus1.PrintInfor();
+List<Employee> employees = new List<Employee>();
+
+// Hàm thêm dữ liệu mẫu ban đầu
+void SeedEmployees()
+{
+    employees.Add(new Employee(1, "00123", "Tèo", "teo@gmail.com", "0912345678"));
+    employees.Add(new Employee(2, "0055", "Tý", "ty@gmail.com", "0989023456"));
+    employees.Add(new Employee(3, "0088", "Tám", "tam@gmail.com", "0988888888"));
+}
+
+// Hàm hiển thị danh sách nhân viên
+void DisplayEmployees()
+{
+    Console.WriteLine("\n--- DANH SÁCH NHÂN VIÊN ---");
+    foreach (var emp in employees)
+    {
+        emp.PrintInfor();
+    }
+}
+
+// Hàm sửa thông tin nhân viên theo ID
+void EditEmployee()
+{
+    Console.Write("Nhập ID nhân viên cần sửa: ");
+    int id = int.Parse(Console.ReadLine());
+    var emp = employees.FirstOrDefault(e => e.Id == id);
+    if (emp != null)
+    {
+        Console.Write("Tên mới: ");
+        emp.Name = Console.ReadLine();
+        Console.Write("Email mới: ");
+        emp.Email = Console.ReadLine();
+        Console.Write("SĐT mới: ");
+        emp.Phone = Console.ReadLine();
+        Console.WriteLine("Thông tin sau khi cập nhật:");
+        emp.PrintInfor();
+    }
+    else
+    {
+        Console.WriteLine("❌ Không tìm thấy nhân viên.");
+    }
+}
+
+// Hàm xóa nhân viên theo ID
+void DeleteEmployee()
+{
+    Console.Write("Nhập ID nhân viên cần xóa: ");
+    int id = int.Parse(Console.ReadLine());
+    var emp = employees.FirstOrDefault(e => e.Id == id);
+    if (emp != null)
+    {
+        employees.Remove(emp);
+        Console.WriteLine($"✅ Đã xóa nhân viên có ID = {id}");
+    }
+    else
+    {
+        Console.WriteLine("❌ Không tìm thấy nhân viên.");
+    }
+}
+
+// Menu điều khiển
+void ShowMenu()
+{
+    Console.OutputEncoding = Encoding.UTF8;
+    SeedEmployees();
+
+    int choice;
+    do
+    {
+        Console.WriteLine("\n========== MENU ==========");
+        Console.WriteLine("1. Hiển thị danh sách nhân viên");
+        Console.WriteLine("2. Sửa thông tin nhân viên");
+        Console.WriteLine("3. Xóa nhân viên");
+        Console.WriteLine("0. Thoát");
+        Console.Write("Chọn: ");
+        choice = int.Parse(Console.ReadLine());
+
+        switch (choice)
+        {
+            case 1:
+                DisplayEmployees();
+                break;
+            case 2:
+                EditEmployee();
+                break;
+            case 3:
+                DeleteEmployee();
+                break;
+            case 0:
+                Console.WriteLine("👉 Thoát chương trình.");
+                break;
+            default:
+                Console.WriteLine("⚠️ Lựa chọn không hợp lệ.");
+                break;
+        }
+    } while (choice != 0);
+}
+
+// Gọi menu khi chạy chương trình
+ShowMenu();
